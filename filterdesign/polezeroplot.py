@@ -7,11 +7,11 @@ def pole_zero_plot(zpk, unitcircle=False, ax=None):
     Create pole zero plots for as seen in the signal processing domain.
 
     zpk : list
-        Nested list containing zeros at zpk[0] and poles at zpk[1]
+        Nested list containing zeros at zpk[0] and poles at zpk[1].
     unitcircle : bool
         Plot unit circle.
     ax : matplotlib axes object
-        Optionally specify our own axes object.
+        Optionally specify an axes object.
     """
     zeros = zpk[0]
     poles = zpk[1]

@@ -27,7 +27,6 @@ def emqf_selectivity_factor(N, As):
     9.7.2 Elliptic Minimal Q-Factor Transfer Functions, Design of
         Half-Band IIR Filters for Given Passband or Stopband Attenuation
     """
-
     N = int(N)
     a_s = float(As)
 
