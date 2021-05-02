@@ -32,8 +32,9 @@ def pole_zero_plot(zpk, unitcircle=False, ax=None):
 
     # plot
     symbol_scale = 40
-    ax.scatter(np.real(poles), np.imag(poles), marker="x", s=symbol_scale, c='k', zorder=3, label="Poles")
-    ax.scatter(np.real(zeros), np.imag(zeros), marker="o", s=symbol_scale*1.25, color='None', edgecolor='k', zorder=3, label="Zeros")
+    zorder = 2.5
+    ax.scatter(np.real(poles), np.imag(poles), marker="x", s=symbol_scale, c='k', zorder=zorder, label="Poles")
+    ax.scatter(np.real(zeros), np.imag(zeros), marker="o", s=symbol_scale*1.25, color='None', edgecolor='k', zorder=zorder, label="Zeros")
 
 if __name__ == '__main__':
     plt.figure()
