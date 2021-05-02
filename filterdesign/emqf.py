@@ -3,23 +3,6 @@ from __future__ import with_statement
 
 import math
 
-from mpmath import *
-def getEMQFSelectivityFactorByStopbandAttenuation(N, As, _mpmath_dps=5000):
-    with mp.workdps(_mpmath_dps):
-        n = int(N)
-        
-        a_s = mpf(As)
-
-        L = mp.power(10, a_s/10) - 1
-        t = mpf(0.5) * ((1 - mp.root( 1-(1/(L**2)) ,4)) / (1 + mp.root( 1-(1/(L**2)) ,4)))
-        q = t + 2*mp.power(t,5) + 15*mp.power(t,9) + 150*mp.power(t,13)
-        g = mp.exp(mp.log(q)/n) # natural logarithm
-        q_0 = (g + mp.power(g,9) + mp.power(g,25) + mp.power(g,49) + mp.power(g,81) + mp.power(g,121) + mp.power(g,169)) / (1 + 2 * (mp.power(g,4) + mp.power(g,16) + mp.power(g,36) + mp.power(g,64) + mp.power(g,100) + mp.power(g,144)))
-    
-        xi = 1 / mp.sqrt(1 - mp.power((1-2*q_0)/(1+2*q_0),4))
-
-        return xi
-
 def emqf_selectivity_factor(N, As):
     """
     Compute the selectivity factor (xi) for the EMQF filter of order N
