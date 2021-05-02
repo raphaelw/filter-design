@@ -1,7 +1,7 @@
 from __future__ import division
 from __future__ import with_statement
 
-import math
+import numpy as np
 
 def emqf_selectivity_factor(N, As):
     """
@@ -30,13 +30,13 @@ def emqf_selectivity_factor(N, As):
     N = int(N)
     a_s = float(As)
 
-    L = pow(10, a_s/10) - 1
-    t = 0.5 * ((1 - pow( 1-(1/(L**2)), 1/4)) / (1 + pow( 1-(1/(L**2)) ,1/4)))
-    q = t + 2*pow(t,5) + 15*pow(t,9) + 150*pow(t,13)
-    g = math.exp(math.log(q)/N) # natural logarithm
-    q_0 = (g + pow(g,9) + pow(g,25) + pow(g,49) + pow(g,81) + pow(g,121) + pow(g,169)) / (1 + 2 * (pow(g,4) + pow(g,16) + pow(g,36) + pow(g,64) + pow(g,100) + pow(g,144)))
+    L = np.power(10., a_s/10) - 1
+    t = 0.5 * ((1 - np.power( 1-(1/(L**2)), 1/4)) / (1 + np.power( 1-(1/(L**2)) ,1/4)))
+    q = t + 2*np.power(t,5) + 15*np.power(t,9) + 150*np.power(t,13)
+    g = np.exp(np.log(q)/N) # natural logarithm
+    q_0 = (g + np.power(g,9) + np.power(g,25) + np.power(g,49) + np.power(g,81) + np.power(g,121) + np.power(g,169)) / (1 + 2 * (np.power(g,4) + np.power(g,16) + np.power(g,36) + np.power(g,64) + np.power(g,100) + np.power(g,144)))
 
-    xi = 1 / math.sqrt(1 - pow((1-2*q_0)/(1+2*q_0),4))
+    xi = 1 / np.sqrt(1 - np.power((1-2*q_0)/(1+2*q_0),4))
     return xi
 
 if __name__ == '__main__':
