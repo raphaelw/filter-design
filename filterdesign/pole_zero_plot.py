@@ -4,7 +4,7 @@ import numpy as np
 
 def pole_zero_plot(zpk, unitcircle=False, ax=None):
     """
-    Create pole zero plots for as seen in the signal processing domain.
+    Create pole zero plots as seen in the signal processing field.
 
     zpk : list
         Nested list containing zeros at zpk[0] and poles at zpk[1].
