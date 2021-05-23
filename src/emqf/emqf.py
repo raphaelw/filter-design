@@ -40,3 +40,9 @@ def emqf_selectivity_factor(N, As):
     return xi
 
 if __name__ == '__main__':
+    #__test_emqf_selectivity_factor()
+    pass
+    N = 5
+    xi = emqf_selectivity_factor(N=N,As=50)
+    r = getEMQFAnalogFilterBySelectivityFactor(n=N, xi=xi)
+    print(r)
