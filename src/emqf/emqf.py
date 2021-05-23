@@ -39,21 +39,4 @@ def emqf_selectivity_factor(N, As):
     xi = 1 / np.sqrt(1 - np.power((1-2*q_0)/(1+2*q_0),4))
     return xi
 
-def __test_emqf_selectivity_factor():
-    test_set = [
-        {'kwargs' : {'N':2, 'As':25}, 'verified_result':8.90548901417296},
-        {'kwargs' : {'N':3, 'As':10}, 'verified_result':1.13665205003484},
-        {'kwargs' : {'N':4, 'As':20}, 'verified_result':1.34389234722479},
-        {'kwargs' : {'N':5, 'As':50}, 'verified_result':3.37476179496728},
-        {'kwargs' : {'N':7, 'As':55.55}, 'verified_result':2.02763195794622}
-    ]
-
-    print("Test: emqf_selectivity_factor")
-    for test in test_set:
-        kwargs = test['kwargs']
-        verified_result = test['verified_result']
-        xi = emqf_selectivity_factor(**kwargs)
-        print(kwargs,'=> xi :', xi, '; difference', abs(xi-verified_result))
-
 if __name__ == '__main__':
-    __test_emqf_selectivity_factor()
