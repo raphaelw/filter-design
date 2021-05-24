@@ -1,7 +1,7 @@
 import unittest
 #import numpy.testing as npt
 
-from emqf.emqf import emqf_selectivity_factor
+import emqf
 
 class TestSimple(unittest.TestCase):
 
@@ -16,7 +16,7 @@ class TestSimple(unittest.TestCase):
         for t in test_set:
             kwargs = t['kwargs']
             verified_result = t['verified_result']
-            xi = emqf_selectivity_factor(**kwargs)
+            xi = emqf.emqf_selectivity_factor(**kwargs)
             self.assertAlmostEqual(xi, verified_result, 5)
 
 
