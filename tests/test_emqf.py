@@ -126,8 +126,8 @@ class TestAnalogLowpass(unittest.TestCase):
 
             z_, p_, k_ = emqf.emqf_analog_lowpass(**kwargs)
 
-            self._almost_equal_complex_unsorted_lists(z, z_, places=5)
-            self._almost_equal_complex_unsorted_lists(p, p_, places=5)
+            self._almost_equal_complex_unsorted_lists(z, z_, places=8)
+            self._almost_equal_complex_unsorted_lists(p, p_, places=8)
 
             # TODO: test for gain (=k)
 
