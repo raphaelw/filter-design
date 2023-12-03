@@ -128,7 +128,7 @@ def emqf_analog_lowpass(N, xi, f3db=False):
     
     if order_is_odd:
         # add first order section. note that it has a zero at infinity
-        H_pole = -1. if f3db else -xi
+        H_pole = -1. if f3db else -np.sqrt(xi)
         poles.append(H_pole)
 
     z = np.array(zeros, dtype=complex)
