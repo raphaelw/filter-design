@@ -1,0 +1,19 @@
+[build-system]
+requires = ["setuptools >= 61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "emqf-filter-design"
+version = "0.0.1"
+readme = "README.md"
+dependencies = [
+  "numpy",
+]
+
+    [project.optional-dependencies]
+    build = ["build", "twine"]
+    dev   = ["black", "bumpver", "isort", "mypy", "pytest"]
+
+    [project.urls]
+    repository    = "https://github.com/raphaelw/emqf-filter-design"
+    documentation = "https://github.com/raphaelw/emqf-filter-design/blob/main/README.md"
