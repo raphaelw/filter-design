@@ -117,7 +117,7 @@ class TestAnalogLowpass(unittest.TestCase):
         for a,b in zip(list_a, list_b):
             self.assertAlmostEqual(a,b,places=places)
 
-    def test_input_output_type(self):
+    def test_input_output(self):
         for t in __class__.TEST_SET:
             kwargs = t["kwargs"]
             verified_result = t["verified_result"]
