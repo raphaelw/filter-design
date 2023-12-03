@@ -42,6 +42,34 @@ def emqf_selectivity_factor(N, As):
     xi = 1 / np.sqrt(1 - np.power((1-2*q_0)/(1+2*q_0),4))
     return xi
 
+def emqf_analog_lowpass(N, xi, f3db=False):
+    """
+    Compute analog EMQF filter prototype in z,p,k format.
+
+    Parameters
+    ----------
+    N : int
+        The order of the filter.
+    xi : float
+        Selectivity factor xi. See also `emqf_selectivity_factor()`
+    f3db : bool
+        The filter is normalized such that the gain magnitude is -3 dB at angular frequency 1.
+
+    Returns
+    -------
+    z, p, k : ndarray, ndarray, float
+        Zeros, poles, and system gain of the IIR filter transfer
+        function.
+
+    Notes
+    -----
+    Filter design steps according to
+    M. D. Lutovac's Book "Filter Design for Signal Processing" (2000)
+    9.7.2 Elliptic Minimal Q-Factor Transfer Functions, Design of
+        Half-Band IIR Filters for Given Passband or Stopband Attenuation
+    """
+    raise NotImplementedError
+
 if __name__ == '__main__':
     #__test_emqf_selectivity_factor()
     pass
