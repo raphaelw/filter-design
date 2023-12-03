@@ -89,8 +89,10 @@ def emqf_analog_lowpass(N, xi, f3db=False):
     -----
     Filter design steps according to
     M. D. Lutovac's Book "Filter Design for Signal Processing" (2000)
-    9.7.2 Elliptic Minimal Q-Factor Transfer Functions, Design of
-        Half-Band IIR Filters for Given Passband or Stopband Attenuation
+    6.3.4 Zeros, Poles and Q-Factors
+    6.3.5 Discrimination Factor, Elliptic Rational Function, and Characteristic Function
+    6.3.6 Normalized Lowpadd Elliptic Transfer Function
+    12.11 Elliptic Filters With Minimal Q-Factors
     """
     N = int(N)
     xi = float(xi)
