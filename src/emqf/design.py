@@ -34,7 +34,10 @@ def emqf_selectivity_factor(N, As):
     t = 0.5 * ((1 - np.power( 1-(1/(L**2)), 1/4)) / (1 + np.power( 1-(1/(L**2)) ,1/4)))
     q = t + 2*np.power(t,5) + 15*np.power(t,9) + 150*np.power(t,13)
     g = np.exp(np.log(q)/N) # natural logarithm
-    q_0 = (g + np.power(g,9) + np.power(g,25) + np.power(g,49) + np.power(g,81) + np.power(g,121) + np.power(g,169)) / (1 + 2 * (np.power(g,4) + np.power(g,16) + np.power(g,36) + np.power(g,64) + np.power(g,100) + np.power(g,144)))
+    q_0 = (
+          (g + np.power(g,9) + np.power(g,25) + np.power(g,49) + np.power(g,81) + np.power(g,121) + np.power(g,169))
+        / (1 + 2 * (np.power(g,4) + np.power(g,16) + np.power(g,36) + np.power(g,64) + np.power(g,100) + np.power(g,144)))
+    )
 
     xi = 1 / np.sqrt(1 - np.power((1-2*q_0)/(1+2*q_0),4))
     return xi
