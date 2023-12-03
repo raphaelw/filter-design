@@ -1,24 +1,115 @@
 import unittest
-#import numpy.testing as npt
 
+# import numpy.testing as npt
+
+import numpy as np
 import emqf
 
-class TestSimple(unittest.TestCase):
+class TestSelectivityFactor(unittest.TestCase):
+    TEST_SET = [
+        {"kwargs": {"N": 2, "As": 25}, "verified_result": 8.90548901417296},
+        {"kwargs": {"N": 3, "As": 10}, "verified_result": 1.13665205003484},
+        {"kwargs": {"N": 4, "As": 20}, "verified_result": 1.34389234722479},
+        {"kwargs": {"N": 5, "As": 50}, "verified_result": 3.37476179496728},
+        {"kwargs": {"N": 7, "As": 55.55}, "verified_result": 2.02763195794622},
+    ]
 
-    def test_emqf_selectivity_factor(self):
-        test_set = [
-            {'kwargs' : {'N':2, 'As':25}, 'verified_result':8.90548901417296},
-            {'kwargs' : {'N':3, 'As':10}, 'verified_result':1.13665205003484},
-            {'kwargs' : {'N':4, 'As':20}, 'verified_result':1.34389234722479},
-            {'kwargs' : {'N':5, 'As':50}, 'verified_result':3.37476179496728},
-            {'kwargs' : {'N':7, 'As':55.55}, 'verified_result':2.02763195794622}
-        ]
-        for t in test_set:
-            kwargs = t['kwargs']
-            verified_result = t['verified_result']
+    def test_input_output(self):
+        for t in __class__.TEST_SET:
+            kwargs = t["kwargs"]
+            verified_result = t["verified_result"]
             xi = emqf.emqf_selectivity_factor(**kwargs)
             self.assertAlmostEqual(xi, verified_result, 5)
 
 
-if __name__ == '__main__':
+class TestAnalogLowpass(unittest.TestCase):
+    # TODO: add even order test data
+    TEST_SET = [
+        {
+            "kwargs": dict(N=7, xi=2.20227264783, f3db=True),
+            "verified_result": {
+                "poles": [
+                    -1.0,
+                    (-0.7970176443524649 + 0.6039560204111288j),
+                    (-0.7970176443524649 - 0.6039560204111288j),
+                    (-0.43442506987734747 + 0.9007079763508602j),
+                    (-0.43442506987734747 - 0.9007079763508602j),
+                    (-0.13151338056090509 + 0.9913143955039907j),
+                    (-0.13151338056090509 - 0.9913143955039907j),
+                ],
+                "zeros": [
+                    # infinity
+                    3.266758038863892j,
+                    -3.266758038863892j,
+                    1.8573266057528255j,
+                    -1.8573266057528255j,
+                    1.5180044036329923j,
+                    -1.5180044036329923j,
+                ],
+            },
+        },
+        {
+            "kwargs": dict(N=3, xi=1.13665205003484, f3db=True),
+            "verified_result": {
+                "poles": [
+                    -1.0,
+                    (-0.11853445445639667 + 0.992949939879511j),
+                    (-0.11853445445639667 - 0.992949939879511j),
+                ],
+                "zeros": [
+                    # infinity
+                    1.144873078567662j,
+                    -1.144873078567662j,
+                ],
+            },
+        },
+        {
+            "kwargs": dict(N=3, xi=1.13665205003484, f3db=False),
+            "verified_result": {
+                "poles": [
+                    -1.13665205003484,
+                    (-0.12637418710158269 + 1.0586225082007534j),
+                    (-0.12637418710158269 - 1.0586225082007534j),
+                ],
+                "zeros": [
+                    # infinity
+                    1.2205936687522079j,
+                    -1.2205936687522079j,
+                ],
+            },
+        },
+    ]
+
+    def test_output_types_and_shapes(self):
+        for t in __class__.TEST_SET:
+            kwargs = t["kwargs"]
+            verified_result = t["verified_result"]
+            z = verified_result["zeros"]
+            p = verified_result["poles"]
+            z_, p_, k_ = emqf.emqf_analog_lowpass(**kwargs)
+
+            # types
+            self.assertIsInstance(z_, np.ndarray)
+            self.assertIsInstance(p_, np.ndarray)
+            self.assertIsInstance(k_, float)
+
+            # shapes
+            self.assertTupleEqual(z_.shape, (len(z),))
+            self.assertTupleEqual(p_.shape, (len(p),))
+
+    def test_input_output_type(self):
+        for t in __class__.TEST_SET:
+            kwargs = t["kwargs"]
+            verified_result = t["verified_result"]
+            z = verified_result["zeros"]
+            p = verified_result["poles"]
+
+            z_, p_, k_ = emqf.emqf_analog_lowpass(**kwargs)
+
+            # shape
+            # self.assertEqual(len())
+            
+
+
+if __name__ == "__main__":
     unittest.main()
