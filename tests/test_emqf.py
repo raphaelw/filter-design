@@ -3,7 +3,7 @@ import unittest
 # import numpy.testing as npt
 
 import numpy as np
-import filterdesign
+from filterdesign import emqf
 
 
 def _complex_sort_keyfunc(complex_num):
@@ -25,7 +25,7 @@ class TestSelectivityFactor(unittest.TestCase):
         for t in __class__.TEST_SET:
             kwargs = t["kwargs"]
             verified_result = t["verified_result"]
-            xi = filterdesign.emqf_selectivity_factor(**kwargs)
+            xi = emqf.selectivity_factor(**kwargs)
             self.assertAlmostEqual(xi, verified_result, places=5)
 
 
@@ -143,7 +143,7 @@ class TestAnalogLowpass(unittest.TestCase):
             verified_result = t["verified_result"]
             z = verified_result["zeros"]
             p = verified_result["poles"]
-            z_, p_, k_ = filterdesign.emqf_analog_lowpass(**kwargs)
+            z_, p_, k_ = emqf.analog_lowpass_from_selectivity_factor(**kwargs)
 
             # types
             self.assertIsInstance(z_, np.ndarray)
@@ -174,7 +174,7 @@ class TestAnalogLowpass(unittest.TestCase):
             p = verified_result["poles"]
             k = verified_result["k"]
 
-            z_, p_, k_ = filterdesign.emqf_analog_lowpass(**kwargs)
+            z_, p_, k_ = emqf.analog_lowpass_from_selectivity_factor(**kwargs)
 
             self._almost_equal_complex_unsorted_lists(z, z_, places=8)
             self._almost_equal_complex_unsorted_lists(p, p_, places=8)

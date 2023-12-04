@@ -6,7 +6,7 @@ from scipy.special import ellipk, ellipj
 from scipy.signal import freqs_zpk
 
 
-def emqf_selectivity_factor(N: int, As: float):
+def selectivity_factor(N: int, As: float):
     """
     Compute the selectivity factor (xi) for the EMQF filter of order N
     and stopband attenuation As.
@@ -74,7 +74,7 @@ def _X(N, xi, i):
     return -cd
 
 
-def emqf_analog_lowpass(N: int, xi: float, f3db: bool = False):
+def analog_lowpass_from_selectivity_factor(N: int, xi: float, f3db: bool = False):
     """
     Compute analog EMQF filter prototype in z,p,k format.
 
@@ -151,3 +151,7 @@ def emqf_analog_lowpass(N: int, xi: float, f3db: bool = False):
     k *= 1.0 / abs(h[0]) * (1.0 / np.sqrt(2))
 
     return z, p, k
+
+
+def analog_lowpass(N: int, As: float, f3db: bool = False):
+    raise NotImplementedError
