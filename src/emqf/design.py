@@ -5,7 +5,8 @@ import numpy as np
 from scipy.special import ellipk, ellipj
 from scipy.signal import freqs_zpk
 
-def emqf_selectivity_factor(N, As):
+
+def emqf_selectivity_factor(N: int, As: float):
     """
     Compute the selectivity factor (xi) for the EMQF filter of order N
     and stopband attenuation As.
@@ -32,14 +33,20 @@ def emqf_selectivity_factor(N, As):
     N = int(N)
     a_s = float(As)
 
-    L = np.power(10., a_s/10) - 1
-    t = 0.5 * ((1 - np.power( 1-(1/np.power(L,2)), 1/4)) / (1 + np.power( 1-(1/np.power(L,2)) ,1/4)))
-    q = t + 2*np.power(t,5) + 15*np.power(t,9) + 150*np.power(t,13)
-    g = np.exp(np.log(q)/N) # natural logarithm
+    L = np.power(10.0, a_s / 10) - 1
+    t = 0.5 * (
+        (1 - np.power(1 - (1 / np.power(L, 2)), 1 / 4))
+        / (1 + np.power(1 - (1 / np.power(L, 2)), 1 / 4))
+    )
+    q = t + 2 * np.power(t, 5) + 15 * np.power(t, 9) + 150 * np.power(t, 13)
+    g = np.exp(np.log(q) / N)  # natural logarithm
+
+    # fmt: off
     q_0 = (
           (g + np.power(g,9) + np.power(g,25) + np.power(g,49) + np.power(g,81) + np.power(g,121) + np.power(g,169))
         / (1 + 2 * (np.power(g,4) + np.power(g,16) + np.power(g,36) + np.power(g,64) + np.power(g,100) + np.power(g,144)))
     )
+    # fmt: off
 
     xi = 1 / np.sqrt(1 - np.power((1-2*q_0)/(1+2*q_0),4))
     return xi
@@ -51,23 +58,23 @@ def _X(N, xi, i):
     xi = float(xi)
     i = int(i)
 
-    order_is_odd = (N%2) == 1
+    order_is_odd = (N % 2) == 1
 
-    if order_is_odd and i == (N+1)//2:
-        return 0.
-    
-    k = 1/xi
-    m = k**2 # modulus m = k^2
-    u = ((2.*float(i) - 1.)/float(N)) * ellipk(m)
+    if order_is_odd and i == (N + 1) // 2:
+        return 0.0
+
+    k = 1 / xi
+    m = k**2  # modulus m = k^2
+    u = ((2.0 * float(i) - 1.0) / float(N)) * ellipk(m)
 
     # according to https://en.wikipedia.org/wiki/Jacobi_elliptic_functions#Minor_functions
     # the following relationship can be used cd() = cn()/dn()
     sn, cn, dn, ph = ellipj(u, m)
-    cd = cn/dn
+    cd = cn / dn
     return -cd
 
 
-def emqf_analog_lowpass(N, xi, f3db=False):
+def emqf_analog_lowpass(N: int, xi: float, f3db: bool = False):
     """
     Compute analog EMQF filter prototype in z,p,k format.
 
@@ -100,24 +107,26 @@ def emqf_analog_lowpass(N, xi, f3db=False):
     f3db = bool(f3db)
 
     assert N > 0
-    order_is_odd = (N%2) == 1
+    order_is_odd = (N % 2) == 1
 
     zeros, poles = list(), list()
 
-    up_to_including = N//2
-    for i in range(1, up_to_including+1):
+    up_to_including = N // 2
+    for i in range(1, up_to_including + 1):
         X = _X(N=N, xi=xi, i=i)
 
-        nominator_re = -np.sqrt(1. - np.power(X,2)) * np.sqrt(np.power(xi,2) - np.power(X,2))
-        nominator_im = X * (xi+1.)
+        nominator_re = -np.sqrt(1.0 - np.power(X, 2)) * np.sqrt(
+            np.power(xi, 2) - np.power(X, 2)
+        )
+        nominator_im = X * (xi + 1.0)
         nominator = complex(nominator_re, nominator_im)
 
-        denominator = xi + np.power(X,2)
+        denominator = xi + np.power(X, 2)
 
-        S_minQ = np.sqrt(xi) * (nominator/denominator)
+        S_minQ = np.sqrt(xi) * (nominator / denominator)
 
         H_pole = S_minQ
-        H_zero = complex(0, 1) * xi/X # transfer function zero (Eq 12.373)
+        H_zero = complex(0, 1) * xi / X  # transfer function zero (Eq 12.373)
         if f3db:
             H_pole /= np.sqrt(xi)
             H_zero /= np.sqrt(xi)
@@ -126,19 +135,19 @@ def emqf_analog_lowpass(N, xi, f3db=False):
         poles.append(H_pole.conjugate())
         zeros.append(H_zero)
         zeros.append(H_zero.conjugate())
-    
+
     if order_is_odd:
         # add first order section. note that it has a zero at infinity
-        H_pole = -1. if f3db else -np.sqrt(xi)
+        H_pole = -1.0 if f3db else -np.sqrt(xi)
         poles.append(H_pole)
 
     z = np.array(zeros, dtype=complex)
     p = np.array(poles, dtype=complex)
-    k = 1. # preliminary
+    k = 1.0  # preliminary
 
     # compte gain factor
-    f3db_location = 1. if f3db else np.sqrt(xi)
-    w, h = freqs_zpk(z,p,k, [f3db_location])
-    k *= 1./abs(h[0]) * (1./np.sqrt(2))
-    
-    return z,p,k
+    f3db_location = 1.0 if f3db else np.sqrt(xi)
+    w, h = freqs_zpk(z, p, k, [f3db_location])
+    k *= 1.0 / abs(h[0]) * (1.0 / np.sqrt(2))
+
+    return z, p, k
