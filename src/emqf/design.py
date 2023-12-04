@@ -137,7 +137,7 @@ def emqf_analog_lowpass(N, xi, f3db=False):
     k = 1. # preliminary
 
     # compte gain factor
-    f3db_location = 1 if f3db else np.sqrt(xi)
+    f3db_location = 1. if f3db else np.sqrt(xi)
     w, h = freqs_zpk(z,p,k, [f3db_location])
     k *= 1./abs(h[0]) * (1./np.sqrt(2))
     
