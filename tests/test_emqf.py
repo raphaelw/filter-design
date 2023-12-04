@@ -89,6 +89,28 @@ class TestAnalogLowpass(unittest.TestCase):
                 ],
             },
         },
+        {
+            "kwargs": dict(N=6, xi=1.7387763506300744, f3db=True),
+            "verified_result": {
+                "k": 0.007943282369759786,
+                "poles": [
+                    (-0.12628110740637039 - 0.9919944969162988j),
+                    (-0.12628110740637039 + 0.9919944969162988j),
+                    (-0.46091371594211633 - 0.8874449540430267j),
+                    (-0.46091371594211633 + 0.8874449540430267j),
+                    (-0.9043525132422612 - 0.4267862835101496j),
+                    (-0.9043525132422612 + 0.4267862835101496j),
+                ],
+                "zeros": [
+                    (-0 - 1.356635096011438j),
+                    (-0 + 1.356635096011438j),
+                    (-0 - 1.7779817314945527j),
+                    (-0 + 1.7779817314945527j),
+                    (-0 - 4.651604760016989j),
+                    (-0 + 4.651604760016989j),
+                ],
+            },
+        },
     ]
 
     def test_output_types_and_shapes(self):
@@ -109,16 +131,16 @@ class TestAnalogLowpass(unittest.TestCase):
             self.assertTupleEqual(p_.shape, (len(p),))
 
     def _almost_equal_complex_unsorted_lists(self, list_a, list_b, places=5):
-        list_a = list( map(complex, list_a) )
-        list_b = list( map(complex, list_b) )
-        
+        list_a = list(map(complex, list_a))
+        list_b = list(map(complex, list_b))
+
         list_a = sorted(list_a, key=_complex_sort_keyfunc)
         list_b = sorted(list_b, key=_complex_sort_keyfunc)
 
         self.assertEqual(len(list_a), len(list_b))
 
-        for a,b in zip(list_a, list_b):
-            self.assertAlmostEqual(a,b,places=places)
+        for a, b in zip(list_a, list_b):
+            self.assertAlmostEqual(a, b, places=places)
 
     def test_input_output(self):
         for t in __class__.TEST_SET:
@@ -132,7 +154,7 @@ class TestAnalogLowpass(unittest.TestCase):
 
             self._almost_equal_complex_unsorted_lists(z, z_, places=8)
             self._almost_equal_complex_unsorted_lists(p, p_, places=8)
-            self.assertAlmostEqual(k, k_, places=5)
+            self.assertAlmostEqual(k, k_, places=6)
 
 
 if __name__ == "__main__":
