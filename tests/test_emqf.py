@@ -36,6 +36,7 @@ class TestAnalogLowpass(unittest.TestCase):
         {
             "kwargs": dict(N=7, xi=2.20227264783, f3db=True),
             "verified_result": {
+                "k": 0.01178808992795499,
                 "poles": [
                     -1.0,
                     (-0.7970176443524649 + 0.6039560204111288j),
@@ -59,6 +60,7 @@ class TestAnalogLowpass(unittest.TestCase):
         {
             "kwargs": dict(N=3, xi=1.13665205003484, f3db=True),
             "verified_result": {
+                "k": 0.7629310910872061,
                 "poles": [
                     -1.0,
                     (-0.11853445445639667 + 0.992949939879511j),
@@ -74,6 +76,7 @@ class TestAnalogLowpass(unittest.TestCase):
         {
             "kwargs": dict(N=3, xi=1.13665205003484, f3db=False),
             "verified_result": {
+                "k": 0.8133904769953263,
                 "poles": [
                     -1.066138851198492,
                     (-0.12637418710158269 + 1.0586225082007534j),
@@ -123,14 +126,13 @@ class TestAnalogLowpass(unittest.TestCase):
             verified_result = t["verified_result"]
             z = verified_result["zeros"]
             p = verified_result["poles"]
+            k = verified_result["k"]
 
             z_, p_, k_ = emqf.emqf_analog_lowpass(**kwargs)
 
             self._almost_equal_complex_unsorted_lists(z, z_, places=8)
             self._almost_equal_complex_unsorted_lists(p, p_, places=8)
-
-            # TODO: test for gain (=k)
-
+            self.assertAlmostEqual(k, k_, places=5)
 
 
 if __name__ == "__main__":

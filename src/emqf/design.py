@@ -3,6 +3,7 @@ from __future__ import with_statement
 
 import numpy as np
 from scipy.special import ellipk, ellipj
+from scipy.signal import freqs_zpk
 
 def emqf_selectivity_factor(N, As):
     """
@@ -133,7 +134,13 @@ def emqf_analog_lowpass(N, xi, f3db=False):
 
     z = np.array(zeros, dtype=complex)
     p = np.array(poles, dtype=complex)
-    k = 1. # TODO: compute k
+    k = 1. # preliminary
+
+    # compte gain factor
+    f3db_location = 1 if f3db else np.sqrt(xi)
+    w, h = freqs_zpk(z,p,k, [f3db_location])
+    k *= 1./abs(h[0]) * (1./np.sqrt(2))
+    
     return z,p,k
 
         
