@@ -12,8 +12,9 @@ dependencies = [
 ]
 
     [project.optional-dependencies]
+    examples = ["matplotlib"]
     build = ["build", "twine"]
-    dev   = ["black", "bumpver", "isort", "mypy", "pytest"]
+    dev   = ["black"]
 
     [project.urls]
     repository    = "https://github.com/raphaelw/emqf-filter-design"
