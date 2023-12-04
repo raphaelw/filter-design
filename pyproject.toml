@@ -7,7 +7,7 @@ name = "emqf"
 version = "0.0.1"
 description = "SciPy compatible design tools for Elliptic Filters with minimal Q-factors (EMQF)"
 readme = "README.md"
-license = "MIT"
+license = {text = "MIT"}
 classifiers = [
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
