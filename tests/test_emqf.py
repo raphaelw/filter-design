@@ -30,8 +30,6 @@ class TestSelectivityFactor(unittest.TestCase):
 
 
 class TestAnalogLowpass(unittest.TestCase):
-    # TODO: add even order test data
-    # TODO: add data for gain (=k)
     TEST_SET = [
         {
             "kwargs": dict(N=7, xi=2.20227264783, f3db=True),
