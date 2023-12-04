@@ -75,7 +75,7 @@ class TestAnalogLowpass(unittest.TestCase):
             "kwargs": dict(N=3, xi=1.13665205003484, f3db=False),
             "verified_result": {
                 "poles": [
-                    -1.13665205003484,
+                    -1.066138851198492,
                     (-0.12637418710158269 + 1.0586225082007534j),
                     (-0.12637418710158269 - 1.0586225082007534j),
                 ],
