@@ -3,9 +3,9 @@ requires = ["setuptools >= 61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "emqf"
-version = "0.0.3"
-description = "SciPy compatible design tools for Elliptic Filters with minimal Q-factors (EMQF)"
+name = "filterdesign"
+version = "0.0.1"
+description = "SciPy compatible design tools around Elliptic Filters with minimal Q-factors (EMQF)"
 readme = "README.md"
 license = {text = "MIT"}
 classifiers = [
