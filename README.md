@@ -1,4 +1,7 @@
 # emqf-filter-design
+
+[![Python package](https://github.com/raphaelw/emqf-filter-design/actions/workflows/python-package.yml/badge.svg)](https://github.com/raphaelw/emqf-filter-design/actions/workflows/python-package.yml)
+
 SciPy compatible design tools for Elliptic Filters with minimal Q-factors (EMQF)
 
 ## How to contribute
