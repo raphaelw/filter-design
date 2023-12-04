@@ -154,4 +154,24 @@ def analog_lowpass_from_selectivity_factor(N: int, xi: float, f3db: bool = False
 
 
 def analog_lowpass(N: int, As: float, f3db: bool = False):
-    raise NotImplementedError
+    """
+    Compute the selectivity factor (xi) for the EMQF filter of order N
+    and stopband attenuation As.
+
+    Parameters
+    ----------
+    N : int
+        The order of the filter.
+    As : float
+        Stopband attenuation given in dB as a positive number.
+    f3db : bool
+        The filter is normalized such that the gain magnitude is -3 dB at angular frequency 1.
+
+    Returns
+    -------
+    z, p, k : ndarray, ndarray, float
+        Zeros, poles, and system gain of the IIR filter transfer
+        function.
+    """
+    xi = selectivity_factor(N=N, As=As)
+    return analog_lowpass_from_selectivity_factor(N=N, xi=xi, f3db=f3db)

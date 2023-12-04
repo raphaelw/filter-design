@@ -4,12 +4,11 @@ from scipy import signal
 import matplotlib.pyplot as plt
 import numpy as np
 
-import filterdesign
+from filterdesign import emqf
 
 N = 5
 As = 50
-xi = filterdesign.emqf_selectivity_factor(N, As)
-z, p, k = filterdesign.emqf_analog_lowpass(N=N, xi=xi, f3db=True)
+z, p, k = emqf.analog_lowpass(N=N, As=As, f3db=True)
 
 b, a = signal.zpk2tf(z, p, k)
 w, h = signal.freqs(b, a, 2000)
