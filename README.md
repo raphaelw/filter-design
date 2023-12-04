@@ -1,4 +1,4 @@
-# filter-design-toolkit
+# filter-design
 
 [![Python package](https://github.com/raphaelw/emqf-filter-design/actions/workflows/python-package.yml/badge.svg)](https://github.com/raphaelw/emqf-filter-design/actions/workflows/python-package.yml)
 
