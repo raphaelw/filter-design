@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "emqf"
-version = "0.0.2"
+version = "0.0.2b1"
 description = "SciPy compatible design tools for Elliptic Filters with minimal Q-factors (EMQF)"
 readme = "README.md"
 license = {text = "MIT"}
@@ -21,7 +21,7 @@ classifiers = [
 keywords = ["emqf", "elliptic-filters", "audio", "dsp", "digital-signal-processing",
   "signal-processing", "audio-processing", "filter-design"
 ]
-requires-python = ">=3.10"
+requires-python = ">=3.9"
 dependencies = [
   "numpy",
   "scipy>=1.0.0",
