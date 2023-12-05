@@ -5,18 +5,22 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from filterdesign import emqf
+from filterdesign import filterplot
 
-N = 5
-As = 50
-z, p, k = emqf.analog_lowpass(N=N, As=As, f3db=True)
+zpk = emqf.analog_lowpass(order=7, stopband_attenuation=50, f3db=True)
 
-b, a = signal.zpk2tf(z, p, k)
-w, h = signal.freqs(b, a, 2000)
-plt.semilogx(w, 20 * np.log10(abs(h)))
-plt.title("Filter frequency response")
-plt.xlabel("Frequency [radians / second]")
-plt.ylabel("Amplitude [dB]")
-plt.margins(0, 0.1)
-plt.grid(which="both", axis="both")
-# plt.axvline(100, color='green') # cutoff frequency
+fig = plt.figure(constrained_layout=True, figsize=(11, 4))
+
+gs = fig.add_gridspec(1, 3)
+ax1 = fig.add_subplot(gs[0, :-1])
+ax2 = fig.add_subplot(gs[0, -1:])
+
+filterplot.plot_analog_filter_zpk(zpk, ax=ax1)
+filterplot.pole_zero_plot(zpk, unitcircle=True, ax=ax2)
+ax2.set_title("Pole/Zero plot (analog)")
+fig.tight_layout()
+
+# ax2.scatter(0, 1)
+
+fig.savefig("./examples/img/emqf_freq_zpk.png", dpi=200)
 plt.show()
