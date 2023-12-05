@@ -7,20 +7,24 @@ import numpy as np
 from filterdesign import emqf
 from filterdesign import filterplot
 
-zpk = emqf.analog_lowpass(order=7, stopband_attenuation=50, f3db=True)
+z, p, k = emqf.analog_lowpass(order=7, stopband_attenuation=50, f3db=True)
 
-fig = plt.figure(constrained_layout=True, figsize=(11, 4))
+fig_ = plt.figure(constrained_layout=True, figsize=(11, 4))
 
-gs = fig.add_gridspec(1, 3)
-ax1 = fig.add_subplot(gs[0, :-1])
-ax2 = fig.add_subplot(gs[0, -1:])
+gs = fig_.add_gridspec(1, 3)
+ax1 = fig_.add_subplot(gs[0, :-1])
+ax2 = fig_.add_subplot(gs[0, -1:])
 
-filterplot.plot_analog_filter_zpk(zpk, ax=ax1)
-filterplot.pole_zero_plot(zpk, unitcircle=True, ax=ax2)
+filterplot.plot_analog_filter_zpk((z, p, k), ax=ax1)
+filterplot.pole_zero_plot((z, p, k), unitcircle=True, ax=ax2)
 ax2.set_title("Pole/Zero plot (analog)")
-fig.tight_layout()
+fig_.tight_layout()
 
+
+fig, ax = plt.subplots(1, 2)
+filterplot.plot_analog_filter_zpk((z, p, k), ax=ax[0])
+filterplot.pole_zero_plot((z, p, k), unitcircle=True, ax=ax[1])
 # ax2.scatter(0, 1)
 
-fig.savefig("./examples/img/emqf_freq_zpk.png", dpi=200)
+fig_.savefig("./examples/img/emqf_freq_zpk.png", dpi=200)
 plt.show()

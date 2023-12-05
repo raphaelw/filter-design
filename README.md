@@ -9,6 +9,27 @@ SciPy compatible design tools around Elliptic filters with minimal Q-factors (EM
 - [Quadrature mirror filter (QMF)](https://en.wikipedia.org/wiki/Quadrature_mirror_filter) for Wavelet style filterbanks
 - Efficient IIR Hilbert Transformer
 
+## Getting started
+
+Install package:
+
+```sh
+pip install "filterdesign @ git+https://github.com/raphaelw/filter-design.git"
+```
+
+```python
+from filterdesign import emqf
+from filterdesign import filterplot
+
+z, p, k = emqf.analog_lowpass(order=7, stopband_attenuation=50, f3db=True)
+
+fig, (ax1, ax2) = plt.subplots(1, 2)
+filterplot.plot_analog_filter_zpk((z, p, k), ax=ax[0])
+filterplot.pole_zero_plot((z, p, k), unitcircle=True, ax=ax[1])
+```
+
+![Frequency and pole/zero plot](./examples/img/emqf_freq_zpk.png)
+
 ## How to contribute
 
 Install this library in editable mode:
