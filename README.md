@@ -26,6 +26,7 @@ z, p, k = emqf.analog_lowpass(order=7, stopband_attenuation=50, f3db=True)
 fig, (ax1, ax2) = plt.subplots(1, 2)
 filterplot.plot_analog_filter_zpk((z, p, k), ax=ax[0])
 filterplot.pole_zero_plot((z, p, k), unitcircle=True, ax=ax[1])
+plt.show()
 ```
 
 ![Frequency and pole/zero plot](./examples/img/emqf_freq_zpk.png)
