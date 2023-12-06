@@ -9,7 +9,7 @@ from filterdesign import filterplot
 
 z, p, k = emqf.analog_lowpass(order=7, stopband_attenuation=50, f3db=True)
 
-fig_ = plt.figure(constrained_layout=True, figsize=(11, 4))
+fig_ = plt.figure(constrained_layout=True, figsize=(9, 4))
 
 gs = fig_.add_gridspec(1, 3)
 ax1 = fig_.add_subplot(gs[0, :-1])

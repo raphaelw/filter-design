@@ -20,6 +20,7 @@ pip install "filterdesign @ git+https://github.com/raphaelw/filter-design.git"
 Design and plot filter:
 
 ```python
+import matplotlib.pyplot as plt
 from filterdesign import emqf
 from filterdesign import filterplot
 
