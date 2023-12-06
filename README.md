@@ -24,7 +24,7 @@ import matplotlib.pyplot as plt
 from filterdesign import emqf
 from filterdesign import filterplot
 
-z, p, k = emqf.analog_lowpass(order=7, stopband_attenuation=50, f3db=True)
+z, p, k = emqf.emqfap(N=7, stopband_attenuation=50, f3db=True)
 
 fig, (ax1, ax2) = plt.subplots(1, 2)
 filterplot.plot_analog_filter_zpk((z, p, k), ax=ax1)

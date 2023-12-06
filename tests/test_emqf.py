@@ -14,11 +14,26 @@ def _complex_sort_keyfunc(complex_num):
 
 class TestSelectivityFactor(unittest.TestCase):
     TEST_SET = [
-        {"kwargs": {"N": 2, "As": 25}, "verified_result": 8.90548901417296},
-        {"kwargs": {"N": 3, "As": 10}, "verified_result": 1.13665205003484},
-        {"kwargs": {"N": 4, "As": 20}, "verified_result": 1.34389234722479},
-        {"kwargs": {"N": 5, "As": 50}, "verified_result": 3.37476179496728},
-        {"kwargs": {"N": 7, "As": 55.55}, "verified_result": 2.02763195794622},
+        {
+            "kwargs": {"N": 2, "stopband_attenuation": 25},
+            "verified_result": 8.90548901417296,
+        },
+        {
+            "kwargs": {"N": 3, "stopband_attenuation": 10},
+            "verified_result": 1.13665205003484,
+        },
+        {
+            "kwargs": {"N": 4, "stopband_attenuation": 20},
+            "verified_result": 1.34389234722479,
+        },
+        {
+            "kwargs": {"N": 5, "stopband_attenuation": 50},
+            "verified_result": 3.37476179496728,
+        },
+        {
+            "kwargs": {"N": 7, "stopband_attenuation": 55.55},
+            "verified_result": 2.02763195794622,
+        },
     ]
 
     def test_input_output(self):
@@ -143,7 +158,7 @@ class TestAnalogLowpass(unittest.TestCase):
             verified_result = t["verified_result"]
             z = verified_result["zeros"]
             p = verified_result["poles"]
-            z_, p_, k_ = emqf.analog_lowpass_from_selectivity_factor(**kwargs)
+            z_, p_, k_ = emqf.emqf_analog_prototype_from_selectivity_factor(**kwargs)
 
             # types
             self.assertIsInstance(z_, np.ndarray)
@@ -174,7 +189,7 @@ class TestAnalogLowpass(unittest.TestCase):
             p = verified_result["poles"]
             k = verified_result["k"]
 
-            z_, p_, k_ = emqf.analog_lowpass_from_selectivity_factor(**kwargs)
+            z_, p_, k_ = emqf.emqf_analog_prototype_from_selectivity_factor(**kwargs)
 
             self._almost_equal_complex_unsorted_lists(z, z_, places=8)
             self._almost_equal_complex_unsorted_lists(p, p_, places=8)

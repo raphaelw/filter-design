@@ -7,7 +7,7 @@ import numpy as np
 from filterdesign import emqf
 from filterdesign import filterplot
 
-z, p, k = emqf.analog_lowpass(order=7, stopband_attenuation=50, f3db=True)
+z, p, k = emqf.emqfap(N=7, stopband_attenuation=50, f3db=True)
 
 fig_ = plt.figure(constrained_layout=True, figsize=(9, 4))
 
