@@ -60,13 +60,13 @@ def pole_zero_plot(zpk, unitcircle=False, ax=None):
     ax.set_title("Pole/Zero plot")
 
 
-def plot_analog_filter_zpk(zpk, ax=None):
+def plot_analog_filter_zpk(zpk, ax=None, worN=2000):
     if ax == None:
         ax = plt.gca()
     z, p, k = zpk
     b, a = signal.zpk2tf(z, p, k)
-    w, h = signal.freqs(b, a, 2000)
-    ax.semilogx(w, 20 * np.log10(abs(h)))
+    w_, h = signal.freqs(b, a, worN)
+    ax.semilogx(w_, 20 * np.log10(abs(h)))
     ax.set_title("Filter frequency response")
     ax.set_xlabel("Frequency [radians / second]")
     ax.set_ylabel("Amplitude [dB]")
